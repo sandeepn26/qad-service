@@ -143,7 +143,7 @@
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>libs/</classpathPrefix>
 							<mainClass>
-								com.globallink.ctm.Application
+								com.lps.Application
 							</mainClass>
 						</manifest>
 						<manifestEntries>
@@ -179,7 +179,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <fork>true</fork>
-                    <mainClass>com.globallink.ctm.Application</mainClass>
+                    <mainClass>com.lps.Application</mainClass>
                 </configuration>
                   <executions>
                     <execution>
@@ -195,7 +195,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.globallink.ctm.Application</mainClass>
+							<mainClass>com.lps.Application</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
