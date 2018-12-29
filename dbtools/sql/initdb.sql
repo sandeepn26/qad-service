@@ -1,9 +1,10 @@
 DROP USER 'leaguepanda'@'localhost';
 
-DROP DATABASE IF EXISTS proman;
+DROP DATABASE IF EXISTS leaguepanda;
 
-CREATE DATABASE proman;
+CREATE DATABASE leaguepanda;
 
 CREATE USER 'leaguepanda'@'localhost' IDENTIFIED BY 'leaguepanda';
 
 GRANT ALL PRIVILEGES ON *.* TO 'leaguepanda'@'localhost' IDENTIFIED BY 'leaguepanda';
+GRANT USAGE ON *.* TO 'leaguepanda'@'localhost';
