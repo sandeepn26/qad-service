@@ -57,8 +57,6 @@ CREATE TABLE team (
   team_description VARCHAR(50) NOT NULL COMMENT 'The team description',
   team_age_min INT NOT NULL DEFAULT 4 COMMENT 'Min ages',
   team_age_max VARCHAR(10) NULL COMMENT 'Max qualifying grade',
-  team_grade_min VARCHAR(10) NULL COMMENT 'Min qualifying grade',
-  team_grade_max VARCHAR(10) NULL COMMENT 'Max qualifying grade',
   active TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'is active in current team',
   owner_id INT NOT NULL COMMENT 'Team owners id',
   create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Created date',
@@ -72,9 +70,11 @@ CREATE TABLE member (
   first_name VARCHAR(50) NOT NULL COMMENT 'The first name',
   last_name VARCHAR(50) NOT NULL COMMENT 'The last name',
   display_name VARCHAR(50) NOT NULL COMMENT 'The display name',
-  display_image VARCHAR(50) NOT NULL COMMENT 'The image name or url',
+  display_image VARCHAR(250) NULL COMMENT 'The image name or url',
   date_of_birth TIMESTAMP NOT NULL COMMENT 'Date of Birth',
   question_day INT NOT NULL DEFAULT 0 COMMENT 'Day of the week with 1 being Sunday',
+  active TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'is active in current team',
+  status VARCHAR(10) NOT NULL DEFAULT 'ACTIVE' COMMENT 'Active or exited',
   create_user INT NOT NULL,
   create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Created date',
   updated_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Upated date',
@@ -103,9 +103,12 @@ CREATE TABLE qad_answer (
 );
 
 CREATE TABLE team_member_map (
+  mapping_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Unique mapping id',
   member_id INT NOT NULL COMMENT 'team member ID',
   team_id INT NOT NULL COMMENT 'Team ID',
-  PRIMARY KEY (member_id, team_id),
+  active TINYINT(1) NOT NULL DEFAULT 1,
+  create_user INT NOT NULL,
+  create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Created date',
   updated_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Upated date',
   CONSTRAINT member_id_fk FOREIGN KEY (member_id) REFERENCES member(member_id) ON DELETE CASCADE,
   CONSTRAINT team_id_fk FOREIGN KEY (team_id) REFERENCES team(team_id) ON DELETE CASCADE
