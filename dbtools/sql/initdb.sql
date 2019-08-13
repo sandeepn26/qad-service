@@ -1,10 +1,9 @@
-DROP USER 'leaguepanda'@'localhost';
+DROP USER 'qad'@'localhost';
 
-DROP DATABASE IF EXISTS leaguepanda;
+DROP DATABASE IF EXISTS qad;
 
-CREATE DATABASE leaguepanda;
+CREATE DATABASE qad;
 
-CREATE USER 'leaguepanda'@'localhost' IDENTIFIED BY 'leaguepanda';
+CREATE USER 'qad'@'localhost' IDENTIFIED BY 'qad';
 
-GRANT ALL PRIVILEGES ON *.* TO 'leaguepanda'@'localhost' IDENTIFIED BY 'leaguepanda';
-
+GRANT ALL PRIVILEGES ON *.* TO 'qad'@'localhost' IDENTIFIED BY 'qad';
