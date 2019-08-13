@@ -3,7 +3,7 @@
 --
 use qad;
 
--- Current roles : ADMIN, PARENT, STUDENT
+-- Current roles : ADMIN, PARENT, MEMBER
 CREATE TABLE role (
   role VARCHAR(10) NOT NULL PRIMARY KEY,
   role_description VARCHAR(25) NOT NULL,
