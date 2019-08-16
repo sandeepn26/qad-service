@@ -5,21 +5,28 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import com.qad.db.entity.AuditInfo;
 
 @Entity
 @Table(name = "member")
+@EntityListeners(AuditingEntityListener.class)
 public class Member {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "MEMBER_ID", updatable = false)
 	private Long memberId;
+	
+	@Column(name = "MEMBER_CODE")
+	private String memberCode;
 	
 	@Column(name = "PARENT_GUARDIAN_ID")
 	private Long parentGuardianId;
@@ -28,10 +35,10 @@ public class Member {
 	private String lastName;
 
 	@Column(name = "FIRST_NAME")
-	private String displayName;
+	private String firstName;
 
 	@Column(name = "DISPLAY_NAME")
-	private String password;
+	private String displayName;
 
 	@Column(name = "ACTIVE")
 	private boolean active;
@@ -43,10 +50,10 @@ public class Member {
 	private Date dob;
 	
 	@Column(name = "QUESTION_DAY")
-	private Integer questionDay;
+	private String questionDay;
 	
 	@Embedded
-	private AuditInfo auditInfo;
+	private AuditInfo auditInfo = new AuditInfo();
 
 	public Long getMemberId() {
 		return memberId;
@@ -80,12 +87,12 @@ public class Member {
 		this.displayName = displayName;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public boolean isActive() {
@@ -112,11 +119,11 @@ public class Member {
 		this.dob = dob;
 	}
 
-	public Integer getQuestionDay() {
+	public String getQuestionDay() {
 		return questionDay;
 	}
 
-	public void setQuestionDay(Integer questionDay) {
+	public void setQuestionDay(String questionDay) {
 		this.questionDay = questionDay;
 	}
 

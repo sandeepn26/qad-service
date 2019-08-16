@@ -21,4 +21,6 @@ public interface IUserDelegate {
 	public UserProfile getUserProfile(String email);
 	
 	public void createUser(User user);
+
+	public void createOrUpdateUserProfile(UserProfile userProfile);
 }

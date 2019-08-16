@@ -3,15 +3,19 @@ package com.qad.db.entity.team;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import com.qad.db.entity.AuditInfo;
 
 @Entity
 @Table(name = "TEAM_MEMBER_MAP")
+@EntityListeners(AuditingEntityListener.class)
 public class TeamMemberMapping {
 
 	@Id
@@ -29,7 +33,7 @@ public class TeamMemberMapping {
 	private boolean active;
 	
 	@Embedded
-	private AuditInfo auditInfo;
+	private AuditInfo auditInfo = new AuditInfo();
 
 	public Long getMemberId() {
 		return memberId;

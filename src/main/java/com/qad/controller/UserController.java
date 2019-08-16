@@ -56,5 +56,14 @@ public class UserController {
 		userDelegate.createUser(user);
 		return true;
 	}
+	
+	@RequestMapping(value = "/addUpdateProfile", method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
+	@CrossOrigin(origins = "*", methods = { RequestMethod.POST, RequestMethod.PUT, RequestMethod.GET,
+			RequestMethod.OPTIONS }, allowedHeaders = "*", allowCredentials = "true")
+	public boolean postUserDetails(@RequestBody UserProfile userProfile) {
+		LOGGER.info("Updating user profile {}", userProfile);
+		userDelegate.createOrUpdateUserProfile(userProfile);
+		return true;
+	}
 
 }

@@ -13,4 +13,6 @@ public interface IUserDBService {
 	public List<com.qad.model.User> getUsers();
 	
 	public UserProfile getUserProfile(String email);
+
+	public void createOrUpdateUserProfile(UserProfile userProfile);
 }

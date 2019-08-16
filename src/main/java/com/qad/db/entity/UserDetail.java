@@ -1,10 +1,11 @@
 package com.qad.db.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,14 +14,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 @Entity
 @Table(name = "user_detail")
+@EntityListeners(AuditingEntityListener.class)
 public class UserDetail {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_detail_id", updatable = false, nullable = false)
-	private Integer id;
+	private Long id;
 
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "user_id", nullable = false)
@@ -57,16 +61,16 @@ public class UserDetail {
 	private String secondaryEmail;
 
 	@Column(name = "date_of_birth", nullable = false)
-	private Date dateOfBirth;
+	private LocalDate dateOfBirth;
 
 	@Embedded
-	private AuditTimes auditTimes;
+	private AuditInfo auditInfo = new AuditInfo();
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -150,20 +154,20 @@ public class UserDetail {
 		this.secondaryEmail = secondaryEmail;
 	}
 
-	public Date getDateOfBirth() {
+	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public AuditTimes getAuditTimes() {
-		return auditTimes;
+	public AuditInfo getAuditInfo() {
+		return auditInfo;
 	}
 
-	public void setAuditTimes(AuditTimes auditTimes) {
-		this.auditTimes = auditTimes;
+	public void setAuditInfo(AuditInfo auditInfo) {
+		this.auditInfo = auditInfo;
 	}
 
 	public User getUser() {

@@ -58,4 +58,10 @@ public class UserDelegate implements IUserDelegate {
 		createUser(user.getEmail(), user.getPassword(), Optional.ofNullable(user.getDisplayName()));
 		
 	}
+
+	@Override
+	public void createOrUpdateUserProfile(UserProfile userProfile) {
+		userDBService.createOrUpdateUserProfile(userProfile);
+		
+	}
 }

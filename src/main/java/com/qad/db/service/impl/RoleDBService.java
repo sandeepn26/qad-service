@@ -7,11 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qad.db.dao.RoleDAO;
-import com.qad.db.dao.UserDAO;
 import com.qad.db.entity.AuditTimes;
 import com.qad.db.entity.Role;
+import com.qad.db.repository.RoleRepository;
+import com.qad.db.repository.UserRepository;
 import com.qad.db.service.IRoleDBService;
 
 @Service
@@ -19,13 +18,11 @@ public class RoleDBService implements IRoleDBService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RoleDBService.class);
 
-	private static final ObjectMapper mapper = new ObjectMapper();
+	@Autowired
+	RoleRepository roleRepo;
 
 	@Autowired
-	RoleDAO roleDAO;
-
-	@Autowired
-	UserDAO userDAO;
+	UserRepository userRepo;
 
 	@Override
 	public boolean createRole() {
@@ -50,11 +47,11 @@ public class RoleDBService implements IRoleDBService {
 
 		role.setAuditTimes(auditTimes);
 
-		roleDAO.save(role);
+		roleRepo.save(role);
 		return true;
 	}
 
 	private Optional<Role> getDefaultRole() {
-		return roleDAO.findById("admin");
+		return roleRepo.findById("admin");
 	}
 }

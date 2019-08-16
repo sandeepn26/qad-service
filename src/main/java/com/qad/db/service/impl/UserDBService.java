@@ -1,22 +1,27 @@
 package com.qad.db.service.impl;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.qad.db.dao.RoleDAO;
-import com.qad.db.dao.UserDAO;
+import com.qad.db.entity.AuditInfo;
 import com.qad.db.entity.AuditTimes;
 import com.qad.db.entity.Role;
 import com.qad.db.entity.User;
 import com.qad.db.entity.UserDetail;
+import com.qad.db.repository.RoleRepository;
+import com.qad.db.repository.UserProfileRepository;
+import com.qad.db.repository.UserRepository;
 import com.qad.db.service.IUserDBService;
 import com.qad.model.UserProfile;
 
@@ -28,10 +33,13 @@ public class UserDBService implements IUserDBService {
 	private static final String DEFAULT_USER_EMAIL = "abc@abc.com";
 
 	@Autowired
-	RoleDAO roleDAO;
+	RoleRepository roleDAO;
 
 	@Autowired
-	UserDAO userDAO;
+	UserRepository userDAO;
+	
+	@Autowired
+	UserProfileRepository userProfileRepository;
 
 	private Optional<Role> getDefaultRole() {
 		return roleDAO.findById("admin");
@@ -52,12 +60,19 @@ public class UserDBService implements IUserDBService {
 		user.setEmail(DEFAULT_USER_EMAIL);
 		user.setEnabled(true);
 		user.setFailedlogins(0);
+		user.setEmailVerificationToken(UUID.randomUUID().toString());
 		user.setLastLoginDate(new Date());
 		user.setLocked(false);
 		user.setPassword("test");
+		user = userDAO.save(user);
+		
+		
 		UserDetail userDetails = createDefaultUserDetails();
+		AuditInfo ai = userDetails.getAuditInfo();
+		ai.setCreatedBy(user.getUserId());
 		user.setUserDetail(userDetails);
 		userDetails.setUser(user);
+		
 		userDAO.save(user);
 	}
 
@@ -69,7 +84,7 @@ public class UserDBService implements IUserDBService {
 	public boolean createUser(String email, String password, String displayName) {
 		User user = new User();
 		getDefaultRole().ifPresent(user::setRole);
-		user.setAuditTimes(new AuditTimes());
+		// user.setAuditTimes(new AuditTimes());
 		user.setDisplayName(displayName);
 		user.setEmail(email);
 		user.setEnabled(true);
@@ -77,6 +92,7 @@ public class UserDBService implements IUserDBService {
 		user.setLastLoginDate(new Date());
 		user.setLocked(false);
 		user.setPassword(password);
+		user.setEmailVerificationToken(RandomStringUtils.randomAlphabetic(10));
 		userDAO.save(user);
 		return false;
 	}
@@ -97,11 +113,10 @@ public class UserDBService implements IUserDBService {
 	private UserDetail createDefaultUserDetails() {
 		UserDetail detail = new UserDetail();
 		detail.setAddress("80 Barrington");
-		detail.setAuditTimes(new AuditTimes());
 		detail.setCity("Nashua");
 		detail.setCounty("USA");
 		detail.setCounty("hb");
-		detail.setDateOfBirth(new Date());
+		detail.setDateOfBirth(LocalDate.now());
 		detail.setFirstName("Sandeep");
 		detail.setLastName("Nad");
 		detail.setState("NH");
@@ -124,6 +139,20 @@ public class UserDBService implements IUserDBService {
 		BeanUtils.copyProperties(user, profile);
 		BeanUtils.copyProperties(user.getUserDetail(), profile);
 		return profile;
+	}
+
+	@Override
+	public void createOrUpdateUserProfile(UserProfile userProfile) {
+		UserDetail userDetail = null;
+		if(userProfile.getId() == null) {
+			userDetail = new UserDetail();
+		}
+		else {
+			userDetail = userProfileRepository.findById(userProfile.getId()).get();
+		}
+		BeanUtils.copyProperties(userProfile, userDetail);	
+		userDetail.setUser(userDAO.findById(3L).get());
+		userProfileRepository.save(userDetail);
 	}
 
 }

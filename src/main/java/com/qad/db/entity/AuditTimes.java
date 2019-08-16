@@ -1,6 +1,6 @@
 package com.qad.db.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -11,28 +11,28 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Embeddable
 public class AuditTimes {
 
-	@Column(name = "CREATE_DATE", nullable = false)
+	@Column(name = "CREATED_TIME", nullable = false, updatable = false)
 	@CreatedDate
-	private Date createTime;
+	private LocalDateTime  createdTime;
 
-	@Column(name = "UPDATE_DATE", nullable = false)
+	@Column(name = "MODIFIED_TIME", nullable = false)
 	@LastModifiedDate
-	private Date auditTime;
+	private LocalDateTime  modifiedTime;
 
-	public Date getCreateTime() {
-		return createTime;
+	public LocalDateTime getCreatedTime() {
+		return createdTime;
 	}
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setCreatedTime(LocalDateTime createdTime) {
+		this.createdTime = createdTime;
 	}
 
-	public Date getAuditTime() {
-		return auditTime;
+	public LocalDateTime getModifiedTime() {
+		return modifiedTime;
 	}
 
-	public void setAuditTime(Date auditTime) {
-		this.auditTime = auditTime;
+	public void setModifiedTime(LocalDateTime modifiedTime) {
+		this.modifiedTime = modifiedTime;
 	}
-
+	
 }

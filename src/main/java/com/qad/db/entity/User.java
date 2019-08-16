@@ -21,7 +21,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id", updatable = false, nullable = false)
-	private Integer userId;
+	private Long userId;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ROLE")
@@ -50,15 +50,18 @@ public class User {
 
 	@Column(name = "last_login_date", nullable = false)
 	private Date lastLoginDate;
+	
+	@Column(name = "email_ver_token", nullable = false)
+	private String emailVerificationToken;
 
 	@Embedded
 	private AuditTimes auditTimes;
 
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
@@ -140,5 +143,13 @@ public class User {
 
 	public void setUserDetail(UserDetail userDetail) {
 		this.userDetail = userDetail;
+	}
+
+	public String getEmailVerificationToken() {
+		return emailVerificationToken;
+	}
+
+	public void setEmailVerificationToken(String emailVerificationToken) {
+		this.emailVerificationToken = emailVerificationToken;
 	}
 }

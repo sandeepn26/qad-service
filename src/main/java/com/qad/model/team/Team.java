@@ -1,62 +1,22 @@
-package com.qad.db.entity.team;
+package com.qad.model.team;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import com.qad.db.entity.AuditInfo;
-
-@Entity
-@Table(name = "member")
-@EntityListeners(AuditingEntityListener.class)
 public class Team {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "TEAM_ID", updatable = false)
-	private Long teamId;
+private String teamType;
 	
-	@Column(name = "TEAM_TYPE")
-	private String teamType;
-	
-	@Column(name = "TEAM_CODE")
 	private String teamCode;
 	
-	@Column(name = "TEAM_NAME")
 	private String teamName;
 	
-	@Column(name = "TEAM_DESCRIPTION")
 	private String teamDescription;
 	
-	@Column(name = "TEAM_AGE_MIN")
 	private Integer teamAgeMin;
 	
-	@Column(name = "TEAM_AGE_MAX")
 	private Integer teamAgeMax;
 	
-	@Column(name = "ACTIVE")
 	private boolean active;
 	
-	@Column(name = "OWNER_ID")
 	private Long ownerId;
-	
-	@Embedded
-	private AuditInfo auditInfo = new AuditInfo();
-
-	public Long getTeamId() {
-		return teamId;
-	}
-
-	public void setTeamId(Long teamId) {
-		this.teamId = teamId;
-	}
 
 	public String getTeamType() {
 		return teamType;
@@ -120,13 +80,5 @@ public class Team {
 
 	public void setOwnerId(Long ownerId) {
 		this.ownerId = ownerId;
-	}
-
-	public AuditInfo getAuditInfo() {
-		return auditInfo;
-	}
-
-	public void setAuditInfo(AuditInfo auditInfo) {
-		this.auditInfo = auditInfo;
 	}
 }

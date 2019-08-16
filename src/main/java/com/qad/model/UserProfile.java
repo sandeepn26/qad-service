@@ -1,23 +1,13 @@
 package com.qad.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class UserProfile {
 
-	private String email;
-
-	private String displayName;
-
-	private String password;
-
-	private Integer failedlogins;
-
-	private boolean enabled;
-
-	private boolean locked;
-
-	private Date lastLoginDate;
-
+	private Long id;
+	
 	private String firstName;
 
 	private String lastName;
@@ -38,62 +28,15 @@ public class UserProfile {
 
 	private String secondaryEmail;
 
-	private Date dateOfBirth;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy", timezone = "America/New_York")
+	private LocalDate dateOfBirth;
 
-	public String getEmail() {
-		return email;
+	public Long getId() {
+		return id;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getDisplayName() {
-		return displayName;
-	}
-
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Integer getFailedlogins() {
-		return failedlogins;
-	}
-
-	public void setFailedlogins(Integer failedlogins) {
-		this.failedlogins = failedlogins;
-	}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public boolean isLocked() {
-		return locked;
-	}
-
-	public void setLocked(boolean locked) {
-		this.locked = locked;
-	}
-
-	public Date getLastLoginDate() {
-		return lastLoginDate;
-	}
-
-	public void setLastLoginDate(Date lastLoginDate) {
-		this.lastLoginDate = lastLoginDate;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getFirstName() {
@@ -176,11 +119,11 @@ public class UserProfile {
 		this.secondaryEmail = secondaryEmail;
 	}
 
-	public Date getDateOfBirth() {
+	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 }
