@@ -14,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.qad.auth.config.AppUserDetails;
 import com.qad.db.entity.AuditInfo;
 import com.qad.db.entity.AuditTimes;
 import com.qad.db.entity.Role;
@@ -23,6 +24,7 @@ import com.qad.db.repository.RoleRepository;
 import com.qad.db.repository.UserProfileRepository;
 import com.qad.db.repository.UserRepository;
 import com.qad.db.service.IUserDBService;
+import com.qad.model.Credentials;
 import com.qad.model.UserProfile;
 
 @Service
@@ -77,7 +79,7 @@ public class UserDBService implements IUserDBService {
 	}
 
 	private Optional<User> getDefaultUser() {
-		return Optional.ofNullable(userDAO.getByEmail(DEFAULT_USER_EMAIL));
+		return userDAO.findByEmail(DEFAULT_USER_EMAIL);
 	}
 
 	@Override
@@ -128,16 +130,13 @@ public class UserDBService implements IUserDBService {
 		return detail;
 	}
 	
-	private User getUserByEmail(String email) {
-		return userDAO.getByEmail(email);
-	}
-
 	@Override
 	public UserProfile getUserProfile(String email) {
-		User user = getUserByEmail(email);
 		UserProfile profile = new UserProfile();
-		BeanUtils.copyProperties(user, profile);
-		BeanUtils.copyProperties(user.getUserDetail(), profile);
+		userDAO.findByEmail(email).ifPresent(user -> {
+			BeanUtils.copyProperties(user, profile);
+			BeanUtils.copyProperties(user.getUserDetail(), profile);
+		});
 		return profile;
 	}
 
@@ -153,6 +152,21 @@ public class UserDBService implements IUserDBService {
 		BeanUtils.copyProperties(userProfile, userDetail);	
 		userDetail.setUser(userDAO.findById(3L).get());
 		userProfileRepository.save(userDetail);
+	}
+
+	@Override
+	public boolean authenticate(Credentials credentials) {
+		return userDAO.findByEmail(credentials.getEmail()).isPresent();
+	}
+
+	@Override
+	public AppUserDetails getUserByEmail(String email) {
+		// TODO Auto-generated method stub
+		User user = userDAO.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("Invalid Credentials"));
+		com.qad.model.User userVo = new com.qad.model.User();
+		AppUserDetails AppUserDetails = new AppUserDetails(userVo);
+		BeanUtils.copyProperties(user, userVo);
+		return AppUserDetails;
 	}
 
 }

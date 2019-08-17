@@ -120,3 +120,12 @@ CREATE TABLE team_member_map (
   CONSTRAINT member_id_fk FOREIGN KEY (member_id) REFERENCES member(member_id) ON DELETE CASCADE,
   CONSTRAINT team_id_fk FOREIGN KEY (team_id) REFERENCES team(team_id) ON DELETE CASCADE
 );
+
+CREATE TABLE user_auth_token (
+  token_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Unique token id',
+  token TEXT NOT NULL COMMENT 'The token',
+  username VARCHAR(250) NOT NULL COMMENT 'The username',
+  valid TINYINT(1) NOT NULL DEFAULT 1,
+  expiration_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Expiration date'
+);
+

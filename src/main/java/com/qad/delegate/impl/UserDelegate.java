@@ -6,9 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.qad.auth.config.AppUserDetails;
 import com.qad.db.service.IRoleDBService;
 import com.qad.db.service.IUserDBService;
 import com.qad.delegate.IUserDelegate;
+import com.qad.model.Credentials;
 import com.qad.model.User;
 import com.qad.model.UserProfile;
 
@@ -56,12 +58,22 @@ public class UserDelegate implements IUserDelegate {
 	@Override
 	public void createUser(User user) {
 		createUser(user.getEmail(), user.getPassword(), Optional.ofNullable(user.getDisplayName()));
-		
 	}
 
 	@Override
 	public void createOrUpdateUserProfile(UserProfile userProfile) {
 		userDBService.createOrUpdateUserProfile(userProfile);
 		
+	}
+
+	@Override
+	public boolean authenticate(Credentials credentials) {
+		boolean isValidUser = userDBService.authenticate(credentials);
+		return isValidUser;
+	}
+
+	@Override
+	public AppUserDetails findByEmail(String email) {
+		return userDBService.getUserByEmail(email);
 	}
 }

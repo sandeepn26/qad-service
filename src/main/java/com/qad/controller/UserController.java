@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qad.delegate.IUserDelegate;
+import com.qad.model.Credentials;
 import com.qad.model.User;
 import com.qad.model.UserProfile;
 
@@ -66,4 +67,10 @@ public class UserController {
 		return true;
 	}
 
+	@RequestMapping(value = "/authenticate", method = {RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS})
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	public boolean authenticate(Credentials credentials) {
+		LOGGER.info("Authenticating user {}", credentials);
+		return userDelegate.authenticate(credentials);
+	}
 }

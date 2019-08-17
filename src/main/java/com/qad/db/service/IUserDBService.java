@@ -2,6 +2,8 @@ package com.qad.db.service;
 
 import java.util.List;
 
+import com.qad.auth.config.AppUserDetails;
+import com.qad.model.Credentials;
 import com.qad.model.UserProfile;
 
 public interface IUserDBService {
@@ -15,4 +17,8 @@ public interface IUserDBService {
 	public UserProfile getUserProfile(String email);
 
 	public void createOrUpdateUserProfile(UserProfile userProfile);
+
+	public boolean authenticate(Credentials credentials);
+
+	public AppUserDetails getUserByEmail(String email);
 }
