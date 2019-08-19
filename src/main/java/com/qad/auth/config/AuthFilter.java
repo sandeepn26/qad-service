@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Component;
 
-@Component
-@WebFilter(description = "authFilter", urlPatterns = { "*" }, asyncSupported = true)
+// @Component
+// @WebFilter(description = "authFilter", urlPatterns = { "*" }, asyncSupported = true)
 public class AuthFilter implements Filter {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthFilter.class);

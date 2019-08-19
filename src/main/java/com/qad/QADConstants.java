@@ -2,6 +2,8 @@ package com.qad;
 
 public interface QADConstants {
 
-	public static final String QAD_AUTH_TOKEN_HEADER = "QAD-AUTH-HEADER";
-	public static final String QAD_AUTH_TOKEN_PREFIX = "Bearer";
+	// JWT Token related
+	public static final String TOKEN_PREFIX = "Bearer ";
+	public static final String TOKEN_REQUEST_HEADER_NAME = "Authorization";
+	public static final String TOKEN_RESPONSE_HEADER_NAME = "QAD-AUTH-HEADER";
 }

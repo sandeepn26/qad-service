@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.qad.auth.config.AppUserDetails;
@@ -166,6 +168,11 @@ public class UserDBService implements IUserDBService {
 		com.qad.model.User userVo = new com.qad.model.User();
 		AppUserDetails AppUserDetails = new AppUserDetails(userVo);
 		BeanUtils.copyProperties(user, userVo);
+		
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(user.getPassword());
+		userVo.setPassword(hashedPassword);
+		
 		return AppUserDetails;
 	}
 

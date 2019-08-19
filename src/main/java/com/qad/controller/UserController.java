@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qad.delegate.IUserDelegate;
-import com.qad.model.Credentials;
+import com.qad.model.QADResponse;
 import com.qad.model.User;
 import com.qad.model.UserProfile;
 
@@ -28,7 +28,7 @@ public class UserController {
 	@Autowired
 	private IUserDelegate userDelegate;
 
-	@RequestMapping(value = "/createUser", method = {RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS})
+	@RequestMapping(value = "/createUser", method = { RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS })
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public boolean createUser(@RequestParam("email") String email, @RequestParam("password") String password,
 			@RequestParam("displayName") String displayName) {
@@ -49,7 +49,7 @@ public class UserController {
 		return userDelegate.getUserProfile(email);
 	}
 
-	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@CrossOrigin(origins = "*", methods = { RequestMethod.POST, RequestMethod.PUT, RequestMethod.GET,
 			RequestMethod.OPTIONS }, allowedHeaders = "*", allowCredentials = "true")
 	public boolean register(@RequestBody User user) {
@@ -57,8 +57,8 @@ public class UserController {
 		userDelegate.createUser(user);
 		return true;
 	}
-	
-	@RequestMapping(value = "/addUpdateProfile", method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
+
+	@RequestMapping(value = "/addUpdateProfile", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@CrossOrigin(origins = "*", methods = { RequestMethod.POST, RequestMethod.PUT, RequestMethod.GET,
 			RequestMethod.OPTIONS }, allowedHeaders = "*", allowCredentials = "true")
 	public boolean postUserDetails(@RequestBody UserProfile userProfile) {
@@ -67,10 +67,9 @@ public class UserController {
 		return true;
 	}
 
-	@RequestMapping(value = "/authenticate", method = {RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS})
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
-	public boolean authenticate(Credentials credentials) {
-		LOGGER.info("Authenticating user {}", credentials);
-		return userDelegate.authenticate(credentials);
+	public QADResponse login(@RequestParam("username") String username, @RequestParam("password") String password) {
+		return QADResponse.LOGIN_SUCCESS;
 	}
 }
