@@ -29,7 +29,7 @@ public class AuthFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private IUserDelegate userDelegate;
-	
+
 	protected static final String BEARER = "Bearer ";
 	protected static final String AUTH_HEADER = "Authorization";
 
