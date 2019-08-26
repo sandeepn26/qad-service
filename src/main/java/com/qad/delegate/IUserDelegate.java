@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.qad.auth.config.AppUserDetails;
 import com.qad.model.Credentials;
+import com.qad.model.PrincipalUser;
 import com.qad.model.User;
 import com.qad.model.UserProfile;
 
@@ -29,4 +30,6 @@ public interface IUserDelegate {
 	public boolean authenticate(Credentials credentials);
 	
 	public AppUserDetails findByEmail(String email);
+	
+	public PrincipalUser getPrincipalForToken(String username, String token);
 }

@@ -11,6 +11,7 @@ import com.qad.db.service.IRoleDBService;
 import com.qad.db.service.IUserDBService;
 import com.qad.delegate.IUserDelegate;
 import com.qad.model.Credentials;
+import com.qad.model.PrincipalUser;
 import com.qad.model.User;
 import com.qad.model.UserProfile;
 
@@ -75,5 +76,10 @@ public class UserDelegate implements IUserDelegate {
 	@Override
 	public AppUserDetails findByEmail(String email) {
 		return userDBService.getUserByEmail(email);
+	}
+	
+	@Override
+	public PrincipalUser getPrincipalForToken(String username, String token) {
+		return userDBService.getPrincipal(username, token);
 	}
 }

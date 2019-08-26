@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.qad.auth.config.AppUserDetails;
 import com.qad.model.Credentials;
+import com.qad.model.PrincipalUser;
 import com.qad.model.UserProfile;
 
 public interface IUserDBService {
@@ -21,4 +22,6 @@ public interface IUserDBService {
 	public boolean authenticate(Credentials credentials);
 
 	public AppUserDetails getUserByEmail(String email);
+
+	PrincipalUser getPrincipal(String username, String token);
 }

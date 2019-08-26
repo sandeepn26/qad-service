@@ -27,6 +27,7 @@ import com.qad.db.repository.UserProfileRepository;
 import com.qad.db.repository.UserRepository;
 import com.qad.db.service.IUserDBService;
 import com.qad.model.Credentials;
+import com.qad.model.PrincipalUser;
 import com.qad.model.UserProfile;
 
 @Service
@@ -41,7 +42,7 @@ public class UserDBService implements IUserDBService {
 
 	@Autowired
 	UserRepository userDAO;
-	
+
 	@Autowired
 	UserProfileRepository userProfileRepository;
 
@@ -69,14 +70,13 @@ public class UserDBService implements IUserDBService {
 		user.setLocked(false);
 		user.setPassword("test");
 		user = userDAO.save(user);
-		
-		
+
 		UserDetail userDetails = createDefaultUserDetails();
 		AuditInfo ai = userDetails.getAuditInfo();
 		ai.setCreatedBy(user.getUserId());
 		user.setUserDetail(userDetails);
 		userDetails.setUser(user);
-		
+
 		userDAO.save(user);
 	}
 
@@ -104,16 +104,17 @@ public class UserDBService implements IUserDBService {
 	@Override
 	public List<com.qad.model.User> getUsers() {
 		List<User> users = userDAO.findAll();
-		List<com.qad.model.User> clientUsers = users.stream().map(user -> createClientUser(user)).collect(Collectors.toList());
+		List<com.qad.model.User> clientUsers = users.stream().map(user -> createClientUser(user))
+				.collect(Collectors.toList());
 		return clientUsers;
 	}
-	
+
 	private com.qad.model.User createClientUser(User user) {
 		com.qad.model.User clientUser = new com.qad.model.User();
 		BeanUtils.copyProperties(user, clientUser);
 		return clientUser;
 	}
-	
+
 	private UserDetail createDefaultUserDetails() {
 		UserDetail detail = new UserDetail();
 		detail.setAddress("80 Barrington");
@@ -128,10 +129,10 @@ public class UserDBService implements IUserDBService {
 		detail.setSecondaryPhone("603-204-1491");
 		detail.setPhone("603-204-1491");
 		detail.setPostCode("03062");
-		
+
 		return detail;
 	}
-	
+
 	@Override
 	public UserProfile getUserProfile(String email) {
 		UserProfile profile = new UserProfile();
@@ -145,13 +146,12 @@ public class UserDBService implements IUserDBService {
 	@Override
 	public void createOrUpdateUserProfile(UserProfile userProfile) {
 		UserDetail userDetail = null;
-		if(userProfile.getId() == null) {
+		if (userProfile.getId() == null) {
 			userDetail = new UserDetail();
-		}
-		else {
+		} else {
 			userDetail = userProfileRepository.findById(userProfile.getId()).get();
 		}
-		BeanUtils.copyProperties(userProfile, userDetail);	
+		BeanUtils.copyProperties(userProfile, userDetail);
 		userDetail.setUser(userDAO.findById(3L).get());
 		userProfileRepository.save(userDetail);
 	}
@@ -168,12 +168,22 @@ public class UserDBService implements IUserDBService {
 		com.qad.model.User userVo = new com.qad.model.User();
 		AppUserDetails AppUserDetails = new AppUserDetails(userVo);
 		BeanUtils.copyProperties(user, userVo);
-		
+
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String hashedPassword = passwordEncoder.encode(user.getPassword());
 		userVo.setPassword(hashedPassword);
-		
+
 		return AppUserDetails;
+	}
+
+	@Override
+	public PrincipalUser getPrincipal(String username, String token) {
+		PrincipalUser PrincipalUser = new PrincipalUser();
+		userDAO.findByEmail(username).ifPresent(user -> {
+			BeanUtils.copyProperties(user, PrincipalUser);
+		});
+
+		return PrincipalUser;
 	}
 
 }
