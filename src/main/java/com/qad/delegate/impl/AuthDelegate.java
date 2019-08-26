@@ -3,6 +3,8 @@ package com.qad.delegate.impl;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +19,11 @@ import org.springframework.stereotype.Service;
 import com.qad.auth.config.AppUserDetailsService;
 import com.qad.db.service.IAuthDBService;
 import com.qad.delegate.IAuthDelegate;
+import com.qad.exceptions.QADServiceException;
 import com.qad.model.Credentials;
 import com.qad.model.JwtToken;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -58,9 +62,9 @@ public class AuthDelegate implements IAuthDelegate {
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(credentials.getEmail(), credentials.getPassword()));
 		} catch (DisabledException e) {
-			throw new RuntimeException("USER_DISABLED", e);
+			throw new QADServiceException("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {
-			throw new RuntimeException("INVALID_CREDENTIALS", e);
+			throw new QADServiceException("INVALID_CREDENTIALS", e);
 		}
 
 		final String token = generateToken(userDetailsService.loadUserByUsername(username));
@@ -79,5 +83,34 @@ public class AuthDelegate implements IAuthDelegate {
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
 				.signWith(SignatureAlgorithm.HS512, secret).compact();
+	}
+
+	public Optional<String> getUsernameFromToken(String token) {
+		return Optional.ofNullable(getClaimFromToken(token, Claims::getSubject));
+	}
+
+	// retrieve expiration date from jwt token
+	public Date getExpirationDateFromToken(String token) {
+		return getClaimFromToken(token, Claims::getExpiration);
+	}
+
+	public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+		final Claims claims = getAllClaimsFromToken(token);
+		return claimsResolver.apply(claims);
+	}
+
+	// for retrieveing any information from token we will need the secret key
+	private Claims getAllClaimsFromToken(String token) {
+		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+	}
+
+	public Boolean validateToken(String token, UserDetails userDetails) {
+		final String username = getUsernameFromToken(token).get();
+		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+	}
+
+	private Boolean isTokenExpired(String token) {
+		final Date expiration = getExpirationDateFromToken(token);
+		return expiration.before(new Date());
 	}
 }

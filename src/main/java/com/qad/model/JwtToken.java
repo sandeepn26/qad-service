@@ -2,6 +2,7 @@ package com.qad.model;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -13,6 +14,7 @@ public class JwtToken {
 	
 	private LocalDateTime expirationTime;
 	
+	@JsonIgnore
 	private boolean valid;
 
 	public String getToken() {
