@@ -61,7 +61,7 @@ CREATE TABLE team (
   team_age_min INT NOT NULL DEFAULT 4 COMMENT 'Min ages',
   team_age_max VARCHAR(10) NULL COMMENT 'Max qualifying grade',
   active TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'is active in current team',
-  owner_id INT NOT NULL COMMENT 'Team owners id',
+  team_owner INT NOT NULL COMMENT 'Team owners id',
   created_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Created date',
   modified_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Upated date',
   created_by INT NOT NULL,

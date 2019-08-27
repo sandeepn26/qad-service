@@ -27,6 +27,8 @@ public class PrincipalUser {
 	
 	private String lastName;
 	
+	private Long userId;
+	
 	private List<String> permissions;
 	
 	private List<GrantedAuthority> authorities;
@@ -117,5 +119,13 @@ public class PrincipalUser {
 
 	public void setAuthorities(List<String> permissions) {
 		this.authorities = permissions.stream().map(s -> new SimpleGrantedAuthority(s)).collect(Collectors.toList());
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 }

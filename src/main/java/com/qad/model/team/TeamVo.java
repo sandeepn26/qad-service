@@ -1,21 +1,21 @@
 package com.qad.model.team;
 
-public class Team {
+public class TeamVo {
 
-private String teamType;
-	
+	private String teamType;
+
 	private String teamCode;
-	
+
 	private String teamName;
-	
+
 	private String teamDescription;
-	
+
 	private Integer teamAgeMin;
-	
+
 	private Integer teamAgeMax;
-	
+
 	private boolean active;
-	
+
 	private Long ownerId;
 
 	public String getTeamType() {

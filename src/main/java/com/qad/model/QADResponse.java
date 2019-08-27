@@ -88,4 +88,6 @@ public class QADResponse {
 	//++++++ Standard Responses +++++++++++++++//
 	
 	public static final QADResponse LOGIN_SUCCESS = builder().withMessage("Login Success").build();
+	
+	public static final QADResponse TEAM_CREATED = builder().withMessage("Team Created").build();
 }

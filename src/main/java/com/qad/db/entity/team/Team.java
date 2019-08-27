@@ -14,7 +14,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.qad.db.entity.AuditInfo;
 
 @Entity
-@Table(name = "member")
+@Table(name = "TEAM")
 @EntityListeners(AuditingEntityListener.class)
 public class Team {
 
@@ -44,7 +44,7 @@ public class Team {
 	@Column(name = "ACTIVE")
 	private boolean active;
 	
-	@Column(name = "OWNER_ID")
+	@Column(name = "team_owner")
 	private Long ownerId;
 	
 	@Embedded
