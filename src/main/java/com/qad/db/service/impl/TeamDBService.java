@@ -68,7 +68,8 @@ public class TeamDBService implements ITeamDBService {
 			return;
 		}
 		
-		LOGGER.info("Adding member {} to the team {}", memberCode, teamCode);
+		LOGGER.info("Adding member {} to the team {}", memberCode,
+				teamCode);
 		TeamMemberMapping mapping = new TeamMemberMapping();
 		mapping.setMemberCode(memberCode);
 		mapping.setTeamCode(teamCode);
