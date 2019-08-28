@@ -19,4 +19,24 @@ public class TeamDelegate implements ITeamDelegate {
 		teamDBService.createTeam(team);
 		return QADResponse.TEAM_CREATED;
 	}
+
+	@Override
+	public QADResponse updateTeam(TeamVo team) {
+		return null;
+	}
+
+	@Override
+	public QADResponse addMember(String memberCode, String teamCode) {
+		return null;
+	}
+
+	@Override
+	public QADResponse editMember(String memberCode, String teamCode) {
+		return null;
+	}
+	
+	@Override
+	public QADResponse removeMember(String memberCode, String teamCode) {
+		return null;
+	}
 }

@@ -22,33 +22,52 @@ public class TeamMemberMapping {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "MAPPING_ID", updatable = false)
 	private Long mappingId;
-	
-	@Column(name = "MEMBER_ID")
-	private Long memberId;
-	
-	@Column(name = "TEAM_ID")
-	private Long teamId;
-	
+
+	@Column(name = "MEMBER_CODE")
+	private String memberCode;
+
+	@Column(name = "TEAM_CODE")
+	private String teamCode;
+
 	@Column(name = "ACTIVE")
 	private boolean active;
-	
+
+	@Column(name = "MODIFY_REASON")
+	private String modifyReason;
+
 	@Embedded
 	private AuditInfo auditInfo = new AuditInfo();
 
-	public Long getMemberId() {
-		return memberId;
+	public Long getMappingId() {
+		return mappingId;
 	}
 
-	public void setMemberId(Long memberId) {
-		this.memberId = memberId;
+	public void setMappingId(Long mappingId) {
+		this.mappingId = mappingId;
 	}
 
-	public Long getTeamId() {
-		return teamId;
+	public String getModifyReason() {
+		return modifyReason;
 	}
 
-	public void setTeamId(Long teamId) {
-		this.teamId = teamId;
+	public void setModifyReason(String modifyReason) {
+		this.modifyReason = modifyReason;
+	}
+
+	public String getMemberCode() {
+		return memberCode;
+	}
+
+	public void setMemberCode(String memberCode) {
+		this.memberCode = memberCode;
+	}
+
+	public String getTeamCode() {
+		return teamCode;
+	}
+
+	public void setTeamCode(String teamCode) {
+		this.teamCode = teamCode;
 	}
 
 	public boolean isActive() {

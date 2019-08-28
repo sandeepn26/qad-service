@@ -55,7 +55,7 @@ CREATE TABLE user_detail (
 CREATE TABLE team (
   team_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'The team id',
   team_type VARCHAR(10) NULL COMMENT 'Team type',
-  team_code VARCHAR(20) NULL COMMENT 'Team Code',
+  team_code VARCHAR(20) NOT NULL UNIQUE COMMENT 'Team Code',
   team_name VARCHAR(50) NOT NULL COMMENT 'The team name',
   team_description VARCHAR(50) NOT NULL COMMENT 'The team description',
   team_age_min INT NOT NULL DEFAULT 4 COMMENT 'Min ages',
@@ -70,7 +70,7 @@ CREATE TABLE team (
 
 CREATE TABLE member (
   member_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT  'Unique student id',
-  member_code VARCHAR(20) NULL COMMENT 'Member Code',
+  member_code VARCHAR(20) NOT NULL UNIQUE COMMENT 'Member Code',
   parent_guardian_id INT NULL COMMENT 'Parent or Guardian id',
   first_name VARCHAR(50) NOT NULL COMMENT 'The first name',
   last_name VARCHAR(50) NOT NULL COMMENT 'The last name',
@@ -110,15 +110,14 @@ CREATE TABLE qad_answer (
 
 CREATE TABLE team_member_map (
   mapping_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Unique mapping id',
-  member_id INT NOT NULL COMMENT 'team member ID',
-  team_id INT NOT NULL COMMENT 'Team ID',
+  member_code VARCHAR(20) NOT NULL COMMENT 'team member ID',
+  team_code VARCHAR(20) NOT NULL COMMENT 'Team ID',
   active TINYINT(1) NOT NULL DEFAULT 1,
+  modify_reason VARCHAR(250) NULL COMMENT 'The reason for update',
   created_by INT NOT NULL,
   modified_by INT NOT NULL,
   created_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Created date',
-  modified_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Upated date',
-  CONSTRAINT member_id_fk FOREIGN KEY (member_id) REFERENCES member(member_id) ON DELETE CASCADE,
-  CONSTRAINT team_id_fk FOREIGN KEY (team_id) REFERENCES team(team_id) ON DELETE CASCADE
+  modified_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Upated date'
 );
 
 CREATE TABLE user_auth_token (
