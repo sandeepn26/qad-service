@@ -1,7 +1,7 @@
 package com.qad.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,8 +18,8 @@ import com.qad.model.team.TeamVo;
 		RequestMethod.OPTIONS }, allowedHeaders = { "*" }, allowCredentials = "true")
 @RestController
 public class TeamController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(TeamController.class);
-
+	private static final Logger LOGGER = LogManager.getLogger(TeamController.class);
+	
 	@Autowired
 	private ITeamDelegate teamDelegate;
 

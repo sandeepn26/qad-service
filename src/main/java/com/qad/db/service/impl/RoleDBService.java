@@ -2,11 +2,12 @@ package com.qad.db.service.impl;
 
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.qad.controller.UserController;
 import com.qad.db.entity.AuditTimes;
 import com.qad.db.entity.Role;
 import com.qad.db.repository.RoleRepository;
@@ -16,7 +17,7 @@ import com.qad.db.service.IRoleDBService;
 @Service
 public class RoleDBService implements IRoleDBService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(RoleDBService.class);
+	private static final Logger LOGGER = LogManager.getLogger(UserController.class);
 
 	@Autowired
 	RoleRepository roleRepo;

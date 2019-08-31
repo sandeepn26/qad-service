@@ -8,8 +8,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.qad.auth.config.AppUserDetails;
+import com.qad.controller.UserController;
 import com.qad.db.entity.AuditInfo;
 import com.qad.db.entity.AuditTimes;
 import com.qad.db.entity.Role;
@@ -33,8 +34,8 @@ import com.qad.model.UserProfile;
 @Service
 public class UserDBService implements IUserDBService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserDBService.class);
-
+	private static final Logger LOGGER = LogManager.getLogger(UserController.class);
+	
 	private static final String DEFAULT_USER_EMAIL = "abc@abc.com";
 
 	@Autowired

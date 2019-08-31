@@ -1,7 +1,7 @@
 package com.qad.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,7 +18,7 @@ import com.qad.model.QADResponse;
 
 @RestController
 public class AuthController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
+	private static final Logger LOGGER = LogManager.getLogger(AuthController.class);
 
 	@Autowired
 	private IAuthDelegate authDelegate;

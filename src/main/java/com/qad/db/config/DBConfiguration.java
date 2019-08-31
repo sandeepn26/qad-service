@@ -2,11 +2,10 @@ package com.qad.db.config;
 
 import javax.sql.DataSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +21,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 @EnableJpaRepositories("com.qad.db.repository")
 public class DBConfiguration {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(DBConfiguration.class);
+	private static final Logger LOGGER = LogManager.getLogger(DBConfiguration.class);
 	
 	public static String DB_APP_NAME = "FXCTSDB";
 	
