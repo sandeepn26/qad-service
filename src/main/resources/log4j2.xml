@@ -22,20 +22,20 @@
     </Appenders>
     <Loggers>
  
-        <Logger name="org.springframework" additivity="true">
+        <!-- <Logger name="org.springframework" additivity="true">
             <AppenderRef ref="appLog" />
             <AppenderRef ref="Console" />
-        </Logger>
+        </Logger> -->
         
         <Logger name="org.quartz" additivity="true">
             <AppenderRef ref="appLog" />
             <AppenderRef ref="Console" />
         </Logger>
         
-        <Logger name="com.qad" additivity="true">
+        <!-- <Logger name="com.qad" additivity="true">
             <AppenderRef ref="appLog" />
             <AppenderRef ref="Console" />
-        </Logger>
+        </Logger> -->
  
         <Root level="info">
             <AppenderRef ref="Console" />

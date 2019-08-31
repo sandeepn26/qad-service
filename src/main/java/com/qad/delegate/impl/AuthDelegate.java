@@ -24,8 +24,12 @@ import com.qad.model.Credentials;
 import com.qad.model.JwtToken;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 @Service
 public class AuthDelegate implements IAuthDelegate {
@@ -95,13 +99,24 @@ public class AuthDelegate implements IAuthDelegate {
 	}
 
 	public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
-		final Claims claims = getAllClaimsFromToken(token);
-		return claimsResolver.apply(claims);
+		Optional<Claims> claims = getAllClaimsFromToken(token);
+		if(claims.isPresent()) {
+			return claimsResolver.apply(claims.get());
+		}
+		return null;
 	}
 
 	// for retrieveing any information from token we will need the secret key
-	private Claims getAllClaimsFromToken(String token) {
-		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+	private Optional<Claims> getAllClaimsFromToken(String token) {
+		try {
+			Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+			return Optional.ofNullable(claims);
+		} catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException
+				| IllegalArgumentException e) {
+			LOGGER.error("Error finding claims for token {}", token);
+		}
+
+		return Optional.empty();
 	}
 
 	public Boolean validateToken(String token, UserDetails userDetails) {

@@ -90,4 +90,6 @@ public class QADResponse {
 	public static final QADResponse LOGIN_SUCCESS = builder().withMessage("Login Success").build();
 	
 	public static final QADResponse TEAM_CREATED = builder().withMessage("Team Created").build();
+	
+	public static final QADResponse UNAUTHORIZED = builder().withMessage("Unauthorized").withCode("UNAUTHORIZED").build();
 }

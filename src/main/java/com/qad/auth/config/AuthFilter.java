@@ -39,20 +39,33 @@ public class AuthFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
-		final String requestTokenHeader = request.getHeader(AUTH_HEADER);
-		LOGGER.info("Checking token");
-		if (requestTokenHeader != null) {
-			String token = StringUtils.substringAfter(requestTokenHeader, BEARER);
-			authDelegate.getUsernameFromToken(token).ifPresent(u -> {
-				LOGGER.info("Auth Filter !!!!!!!!!!!!!!!! {} {}", token, u);
-				PrincipalUser principal = userDelegate.getPrincipalForToken(u, token);
-				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-						principal, null, principal.getAuthorities());
-				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-			});
+
+		String requestUrl = request.getRequestURI();
+		if (!"/register".equals(requestUrl) && !"/authenticate".equals(requestUrl)) {
+			initContext(request);
 		}
 
 		chain.doFilter(request, response);
+	}
+
+	private void initContext(HttpServletRequest request) {
+		final String requestTokenHeader = request.getHeader(AUTH_HEADER);
+
+		LOGGER.info("Checking token");
+
+		if (requestTokenHeader != null) {
+			String token = StringUtils.substringAfter(requestTokenHeader, BEARER);
+
+			authDelegate.getUsernameFromToken(token).ifPresent(u -> {
+				LOGGER.info("Auth Filter !!!!!!!!!!!!!!!! {} {}", token, u);
+
+				PrincipalUser principal = userDelegate.getPrincipalForToken(u, token);
+				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+						principal, null, principal.getAuthorities());
+
+				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+			});
+		}
 	}
 
 }
