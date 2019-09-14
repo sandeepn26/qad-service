@@ -2,7 +2,7 @@ package com.qad.model.team;
 
 import java.util.Date;
 
-public class Member {
+public class MemberVo {
 
 	private String memberCode;
 

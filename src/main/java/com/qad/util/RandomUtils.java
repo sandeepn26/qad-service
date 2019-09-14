@@ -17,6 +17,10 @@ public class RandomUtils {
 	public static String generateAccountCode() {
 		return String.format(FORMAT, "A", RandomStringUtils.randomAlphanumeric(11));
 	}
+	
+	public static String generateMemberCode() {
+		return String.format(FORMAT, "M", RandomStringUtils.randomAlphanumeric(11));
+	}
 
 	public static String verificatonToken() {
 		return RandomStringUtils.randomAlphanumeric(80);

@@ -91,5 +91,7 @@ public class QADResponse {
 	
 	public static final QADResponse TEAM_CREATED = builder().withMessage("Team Created").build();
 	
+	public static final QADResponse MEMBER_CREATED = builder().withMessage("Member Created").build();
+	
 	public static final QADResponse UNAUTHORIZED = builder().withMessage("Unauthorized").withCode("UNAUTHORIZED").build();
 }

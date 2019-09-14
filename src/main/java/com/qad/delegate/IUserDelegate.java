@@ -6,8 +6,10 @@ import java.util.Optional;
 import com.qad.auth.config.AppUserDetails;
 import com.qad.model.Credentials;
 import com.qad.model.PrincipalUser;
+import com.qad.model.QADResponse;
 import com.qad.model.User;
 import com.qad.model.UserProfile;
+import com.qad.model.team.MemberVo;
 
 public interface IUserDelegate {
 
@@ -32,4 +34,8 @@ public interface IUserDelegate {
 	public AppUserDetails findByEmail(String email);
 	
 	public PrincipalUser getPrincipalForToken(String username, String token);
+
+	public QADResponse createMember(MemberVo member);
+	
+	public QADResponse createMemberForUser(String email);
 }

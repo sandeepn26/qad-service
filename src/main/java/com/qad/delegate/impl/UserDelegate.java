@@ -12,8 +12,10 @@ import com.qad.db.service.IUserDBService;
 import com.qad.delegate.IUserDelegate;
 import com.qad.model.Credentials;
 import com.qad.model.PrincipalUser;
+import com.qad.model.QADResponse;
 import com.qad.model.User;
 import com.qad.model.UserProfile;
+import com.qad.model.team.MemberVo;
 
 @Service
 public class UserDelegate implements IUserDelegate {
@@ -81,5 +83,17 @@ public class UserDelegate implements IUserDelegate {
 	@Override
 	public PrincipalUser getPrincipalForToken(String username, String token) {
 		return userDBService.getPrincipal(username, token);
+	}
+
+	@Override
+	public QADResponse createMember(MemberVo member) {
+		userDBService.createMember(member);
+		return QADResponse.TEAM_CREATED;
+	}
+
+	@Override
+	public QADResponse createMemberForUser(String email) {
+		userDBService.createMemberForUser(email);
+		return QADResponse.MEMBER_CREATED;
 	}
 }

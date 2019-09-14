@@ -7,7 +7,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +20,7 @@ import com.qad.delegate.IUserDelegate;
 import com.qad.model.QADResponse;
 import com.qad.model.User;
 import com.qad.model.UserProfile;
+import com.qad.model.team.MemberVo;
 
 @CrossOrigin(origins = { "*" }, methods = { RequestMethod.POST, RequestMethod.GET,
 		RequestMethod.OPTIONS }, allowedHeaders = { "*" }, allowCredentials = "true")
@@ -28,15 +31,14 @@ public class UserController {
 	@Autowired
 	private IUserDelegate userDelegate;
 
-	@RequestMapping(value = "/createUser", method = { RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS })
-	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	@PostMapping(value = "/createUser")
 	public boolean createUser(@RequestParam("email") String email, @RequestParam("password") String password,
 			@RequestParam("displayName") String displayName) {
 		userDelegate.createUser(email, password, displayName);
 		return true;
 	}
 
-	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	@GetMapping(value = "/users")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public List<User> getUsers() {
 		return userDelegate.getUsers();
@@ -49,27 +51,35 @@ public class UserController {
 		return userDelegate.getUserProfile(email);
 	}
 
-	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@CrossOrigin(origins = "*", methods = { RequestMethod.POST, RequestMethod.PUT, RequestMethod.GET,
-			RequestMethod.OPTIONS }, allowedHeaders = "*", allowCredentials = "true")
+	@PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public boolean register(@RequestBody User user) {
 		LOGGER.info("Registering user {}", user.getEmail());
 		userDelegate.createUser(user);
 		return true;
 	}
 
-	@RequestMapping(value = "/addUpdateProfile", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@CrossOrigin(origins = "*", methods = { RequestMethod.POST, RequestMethod.PUT, RequestMethod.GET,
-			RequestMethod.OPTIONS }, allowedHeaders = "*", allowCredentials = "true")
+	@PostMapping(value = "/addUpdateProfile", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public boolean postUserDetails(@RequestBody UserProfile userProfile) {
 		LOGGER.info("Updating user profile {}", userProfile);
 		userDelegate.createOrUpdateUserProfile(userProfile);
 		return true;
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	@PostMapping(value = "/login")
 	public QADResponse login(@RequestParam("username") String username, @RequestParam("password") String password) {
 		return QADResponse.LOGIN_SUCCESS;
 	}
+	
+	@PostMapping(value = "/createMember", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public QADResponse createMember(@RequestBody MemberVo member) {
+		LOGGER.info("Creating member {} {}", member.getFirstName(), member.getLastName());
+		return userDelegate.createMember(member);
+	}
+
+	@PostMapping(value = "/initMembership")
+	public QADResponse createMemberForUser(@RequestParam("email") String email) {
+		LOGGER.info("Creating member for user {}", email);
+		return userDelegate.createMemberForUser(email);
+	}
+
 }

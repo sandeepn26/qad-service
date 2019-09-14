@@ -70,6 +70,7 @@ CREATE TABLE team (
 
 CREATE TABLE member (
   member_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT  'Unique student id',
+  member_user_id INT NULL DEFAULT -1 COMMENT  'User Id if the Member is a User',
   member_code VARCHAR(20) NOT NULL UNIQUE COMMENT 'Member Code',
   parent_guardian_id INT NULL COMMENT 'Parent or Guardian id',
   first_name VARCHAR(50) NOT NULL COMMENT 'The first name',

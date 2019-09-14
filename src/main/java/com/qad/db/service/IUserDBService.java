@@ -6,6 +6,7 @@ import com.qad.auth.config.AppUserDetails;
 import com.qad.model.Credentials;
 import com.qad.model.PrincipalUser;
 import com.qad.model.UserProfile;
+import com.qad.model.team.MemberVo;
 
 public interface IUserDBService {
 	
@@ -24,4 +25,8 @@ public interface IUserDBService {
 	public AppUserDetails getUserByEmail(String email);
 
 	PrincipalUser getPrincipal(String username, String token);
+
+	public void createMember(MemberVo member);
+	
+	public void createMemberForUser(String email);
 }

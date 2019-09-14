@@ -1,6 +1,6 @@
 package com.qad.db.entity.team;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -25,6 +25,9 @@ public class Member {
 	@Column(name = "MEMBER_ID", updatable = false)
 	private Long memberId;
 	
+	@Column(name = "MEMBER_USER_ID")
+	private Long memberUserId;
+	
 	@Column(name = "MEMBER_CODE")
 	private String memberCode;
 	
@@ -47,7 +50,7 @@ public class Member {
 	private String status;
 
 	@Column(name = "DATE_OF_BIRTH")
-	private Date dob;
+	private LocalDate dob;
 	
 	@Column(name = "QUESTION_DAY")
 	private String questionDay;
@@ -61,6 +64,22 @@ public class Member {
 
 	public void setMemberId(Long memberId) {
 		this.memberId = memberId;
+	}
+
+	public Long getMemberUserId() {
+		return memberUserId;
+	}
+
+	public void setMemberUserId(Long memberUserId) {
+		this.memberUserId = memberUserId;
+	}
+
+	public String getMemberCode() {
+		return memberCode;
+	}
+
+	public void setMemberCode(String memberCode) {
+		this.memberCode = memberCode;
 	}
 
 	public Long getParentGuardianId() {
@@ -111,11 +130,11 @@ public class Member {
 		this.status = status;
 	}
 
-	public Date getDob() {
+	public LocalDate getDob() {
 		return dob;
 	}
 
-	public void setDob(Date dob) {
+	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
 
