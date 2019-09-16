@@ -96,4 +96,16 @@ public class UserDelegate implements IUserDelegate {
 		userDBService.createMemberForUser(email);
 		return QADResponse.MEMBER_CREATED;
 	}
+
+	@Override
+	public QADResponse updateMember(MemberVo memberVo) {
+		userDBService.updateMember(memberVo);
+		return QADResponse.MEMBER_UPDATED;
+	}
+
+	@Override
+	public QADResponse deactivateMember(String memberCode) {
+		userDBService.deactivateMember(memberCode);
+		return QADResponse.MEMBER_DEACTIVATED;
+	}
 }

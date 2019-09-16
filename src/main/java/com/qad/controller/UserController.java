@@ -75,6 +75,18 @@ public class UserController {
 		LOGGER.info("Creating member {} {}", member.getFirstName(), member.getLastName());
 		return userDelegate.createMember(member);
 	}
+	
+	@PostMapping(value = "/updateMember", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public QADResponse updateMember(@RequestBody MemberVo member) {
+		LOGGER.info("Updating member {} {}", member.getFirstName(), member.getLastName());
+		return userDelegate.updateMember(member);
+	}
+	
+	@PostMapping(value = "/deactivateMember")
+	public QADResponse deactivateMember(String memberCode) {
+		LOGGER.info("Deactivating member {}", memberCode);
+		return userDelegate.deactivateMember(memberCode);
+	}
 
 	@PostMapping(value = "/initMembership")
 	public QADResponse createMemberForUser(@RequestParam("email") String email) {

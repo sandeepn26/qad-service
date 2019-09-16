@@ -196,14 +196,10 @@ public class UserDBService implements IUserDBService {
 	@Override
 	public void createMember(MemberVo memberVo) {
 		Member member = new Member();
+		BeanUtils.copyProperties(memberVo, member);
 		member.setActive(true);
 		member.setStatus("A");
-		member.setDisplayName(memberVo.getDisplayName());
-		member.setFirstName(memberVo.getFirstName());
-		member.setLastName(memberVo.getLastName());
-		member.setDob(memberVo.getDob());
 		member.setMemberCode(RandomUtils.generateMemberCode());
-		member.setQuestionDay(memberVo.getQuestionDay());
 		
 		memberRepository.save(member);
 	}
@@ -212,10 +208,6 @@ public class UserDBService implements IUserDBService {
 	public void createMemberForUser(String email) {
 		User user = findByEmail(email);
 		createUserMember(user);
-	}
-	
-	private User findByEmail(String email) {
-		return userRepo.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("Invalid Credentials"));
 	}
 	
 	private void createUserMember(User user) {
@@ -232,5 +224,30 @@ public class UserDBService implements IUserDBService {
 		
 		memberRepository.save(member);
 	}
+
+	@Override
+	public void updateMember(MemberVo memberVo) {
+		Member member = findByMemberCode(memberVo.getMemberCode());
+		BeanUtils.copyProperties(memberVo, member);
+
+		memberRepository.save(member);
+	}
+
+	@Override
+	public void deactivateMember(String memberCode) {
+		Member member = findByMemberCode(memberCode);
+		member.setActive(false);
+		memberRepository.save(member);
+	}
+	
+	//=========================== Helper Methods =================================//
+	
+	private User findByEmail(String email) {
+		return userRepo.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("Invalid Credentials"));
+	}
+	
+	private Member findByMemberCode(String memberCode) {
+		return memberRepository.findByMemberCode(memberCode).orElseThrow(() -> new IllegalArgumentException("Invalid Member Code"));
+	} 
 
 }

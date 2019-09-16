@@ -26,7 +26,11 @@ public interface IUserDBService {
 
 	PrincipalUser getPrincipal(String username, String token);
 
-	public void createMember(MemberVo member);
+	public void createMember(MemberVo memberVo);
+	
+	public void updateMember(MemberVo memberVo);
+	
+	public void deactivateMember(String memberCode);
 	
 	public void createMemberForUser(String email);
 }

@@ -93,5 +93,9 @@ public class QADResponse {
 	
 	public static final QADResponse MEMBER_CREATED = builder().withMessage("Member Created").build();
 	
+	public static final QADResponse MEMBER_UPDATED = builder().withMessage("Member Updated").build();
+	
+	public static final QADResponse MEMBER_DEACTIVATED = builder().withMessage("Member Deactivated").build();
+	
 	public static final QADResponse UNAUTHORIZED = builder().withMessage("Unauthorized").withCode("UNAUTHORIZED").build();
 }

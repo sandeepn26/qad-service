@@ -38,4 +38,8 @@ public interface IUserDelegate {
 	public QADResponse createMember(MemberVo member);
 	
 	public QADResponse createMemberForUser(String email);
+	
+	public QADResponse updateMember(MemberVo memberVo);
+	
+	public QADResponse deactivateMember(String memberCode);
 }
