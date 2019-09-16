@@ -88,7 +88,7 @@ public class UserDelegate implements IUserDelegate {
 	@Override
 	public QADResponse createMember(MemberVo member) {
 		userDBService.createMember(member);
-		return QADResponse.TEAM_CREATED;
+		return QADResponse.MEMBER_CREATED;
 	}
 
 	@Override

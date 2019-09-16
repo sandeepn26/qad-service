@@ -194,9 +194,18 @@ public class UserDBService implements IUserDBService {
 	}
 
 	@Override
-	public void createMember(MemberVo member) {
-		// TODO Auto-generated method stub
+	public void createMember(MemberVo memberVo) {
+		Member member = new Member();
+		member.setActive(true);
+		member.setStatus("A");
+		member.setDisplayName(memberVo.getDisplayName());
+		member.setFirstName(memberVo.getFirstName());
+		member.setLastName(memberVo.getLastName());
+		member.setDob(memberVo.getDob());
+		member.setMemberCode(RandomUtils.generateMemberCode());
+		member.setQuestionDay(memberVo.getQuestionDay());
 		
+		memberRepository.save(member);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.qad.model.team;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class MemberVo {
@@ -18,7 +19,7 @@ public class MemberVo {
 
 	private String status;
 
-	private Date dob;
+	private LocalDate dob;
 
 	private String questionDay;
 
@@ -78,11 +79,11 @@ public class MemberVo {
 		this.status = status;
 	}
 
-	public Date getDob() {
+	public LocalDate getDob() {
 		return dob;
 	}
 
-	public void setDob(Date dob) {
+	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
 
