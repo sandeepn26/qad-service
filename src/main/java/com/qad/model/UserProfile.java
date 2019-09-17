@@ -17,6 +17,8 @@ public class UserProfile {
 	private String city;
 
 	private String state;
+	
+	private String email;
 
 	private String postCode;
 
@@ -125,5 +127,13 @@ public class UserProfile {
 
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

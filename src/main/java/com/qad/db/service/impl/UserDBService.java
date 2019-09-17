@@ -156,11 +156,11 @@ public class UserDBService implements IUserDBService {
 		UserDetail userDetail = null;
 		if (userProfile.getId() == null) {
 			userDetail = new UserDetail();
+			userDetail.setUser(findByEmail(userProfile.getEmail()));
 		} else {
 			userDetail = userProfileRepository.findById(userProfile.getId()).get();
 		}
 		BeanUtils.copyProperties(userProfile, userDetail);
-		userDetail.setUser(userRepo.findById(3L).get());
 		userProfileRepository.save(userDetail);
 	}
 
