@@ -14,7 +14,7 @@
 		<quartz.version>2.3.0</quartz.version>
 		<spring.framework.version>5.1.6.RELEASE</spring.framework.version>
 		<build.plugins.plugin.version>2.1.7.RELEASE</build.plugins.plugin.version>
-		<log4j-version>2.12.1</log4j-version>
+		<log4j-version>2.15.0</log4j-version>
 	</properties>
 
 	<dependencies>
